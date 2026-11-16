@@ -70,7 +70,7 @@ Chemin explicite : `LILYPOND_PATH`. Non exécuté sur le poste de développement
 
 | Élément | Taille |
 | --- | --- |
-| Environnement Python (TensorFlow, PyTorch CPU, etc.) | plusieurs Go (non mesuré précisément) |
+| Environnement Python (TensorFlow, PyTorch CPU, etc.) | 2,6 Go (mesuré sous Windows, avec les outils de développement) |
 | Checkpoint ByteDance | 172 Mo |
 | Checkpoints MT3 (`mt3` et `ismir2021`) | 164 Mo chacun (295 fichiers) |
-| Sorties d'un job (WAV de travail compris) | 10 à 20 Mo pour 3 minutes d'audio |
+| Sorties d'un job (WAV de travail compris) | 9,6 Mo mesurés pour 2 min 47 s d'audio |
