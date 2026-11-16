@@ -1,0 +1,67 @@
+# Configuration par défaut de partition-ia.
+# Chaque clé peut être surchargée par une variable d'environnement préfixée
+# par PARTITION_, les niveaux étant séparés par un double tiret bas.
+# Exemple : PARTITION_AUDIO__MAX_DURATION_S=300, PARTITION_ENGINE=basic_pitch.
+
+# Moteur de transcription par défaut : bytedance | mt3 | basic_pitch
+engine: bytedance
+
+audio:
+  sample_rate: 22050        # fréquence du WAV mono de travail (chaque moteur rééchantillonne si besoin)
+  max_duration_s: 600       # durée maximale acceptée
+  normalize: true           # normalisation crête
+  peak: 0.95                # niveau crête visé (1.0 = pleine échelle)
+
+cleanup:
+  min_duration_s: 0.03      # les notes plus courtes sont supprimées
+  min_velocity: 12          # les notes plus faibles sont supprimées (0 = désactivé)
+  merge_window_s: 0.05      # deux notes de même hauteur qui se chevauchent et commencent à moins de 50 ms d'écart sont fusionnées
+
+tempo:
+  method: audio             # audio (librosa, suit les battements) | midi (tempo constant depuis les notes)
+  forced_bpm: null          # ex. 96 pour imposer le tempo
+  min_bpm: 50
+  max_bpm: 180
+  follow_beats: true        # true : la grille suit les battements détectés (rubato) ; false : tempo constant
+
+quantize:
+  grid: 16                  # subdivision de la ronde : 16 = double croche, 8 = croche, 32 = triple croche
+  triplets: false           # autorise aussi les triolets de croches
+  fill_gap_beats: 0.25      # un silence plus court que cela (en noires) est absorbé par la note précédente
+
+hands:
+  method: threshold         # threshold (seuil de hauteur) | chord (voix haute / basse par accord)
+  split_pitch: 60           # do central
+  max_hand_span: 14         # écart maximal (demi-tons) jouable d'une seule main, pour la méthode chord
+
+notation:
+  key: null                 # ex. "C major", "a minor", "Eb major" ; null = détection Krumhansl
+  time_signature: "4/4"     # métrique imposée (pas de détection automatique en V1)
+  max_voices_per_staff: 2
+  title: null               # null = nom du fichier audio
+  composer: null
+  author: "Adrien Faure (eleven)"   # auteur de la transcription, inscrit dans les métadonnées MusicXML et PDF
+
+paths:
+  models_dir: models
+  data_dir: data
+  musescore_path: null      # sinon détection automatique ; MUSESCORE_PATH est aussi accepté
+  lilypond_path: null       # sinon détection automatique ; LILYPOND_PATH est aussi accepté
+  ffmpeg_path: null         # sinon PATH, puis binaire fourni par imageio-ffmpeg ; FFMPEG_PATH accepté
+
+engines:
+  bytedance:
+    device: cpu             # cpu | cuda
+    checkpoint: null        # null = models/bytedance/CRNN_note_F1=0.9677_pedal_F1=0.9186.pth
+  basic_pitch:
+    onset_threshold: 0.5
+    frame_threshold: 0.3
+    minimum_note_length_ms: 58.0
+  mt3:
+    model_type: mt3         # mt3 (multi-instrument) | ismir2021 (piano seul, avec vélocités)
+    checkpoint_dir: null    # null = models/mt3/checkpoints/<model_type>
+
+server:
+  host: 127.0.0.1
+  port: 8000
+  max_upload_mb: 100

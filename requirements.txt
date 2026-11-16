@@ -1,0 +1,33 @@
+# Dépendances communes (sans MT3). Python 3.10 ou 3.11.
+# Versions testées sous Windows 11 / Python 3.11.8 indiquées en commentaire.
+#
+# PyTorch : sous Linux, « pip install torch » installe la variante CUDA (plusieurs Go).
+# Pour une machine sans GPU, installez d'abord la variante CPU :
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+# --- cœur du pipeline ---
+numpy>=1.23,<2            # 1.26.4 ; NumPy 2 est incompatible avec TensorFlow 2.15 (basic-pitch)
+scipy>=1.10               # 1.17.1
+librosa>=0.10             # 0.11.0
+soundfile>=0.12           # 0.14.0 ; lit WAV, FLAC et MP3 (libsndfile >= 1.1)
+pretty_midi>=0.2.10       # 0.2.11
+music21>=9.1              # 10.5.2
+imageio-ffmpeg>=0.4.9     # 0.8.1 ; fournit un binaire ffmpeg de secours (M4A) si ffmpeg n'est pas dans le PATH
+pyyaml>=6.0               # 6.0.3
+psutil>=5.9               # mesure de la mémoire par scripts/check_prerequisites.py
+
+# --- rendus ---
+verovio>=4.0              # 6.4.1 ; MusicXML -> SVG
+svglib>=1.5               # 2.4.0 ; PDF de secours sans MuseScore ni LilyPond
+reportlab>=4.0            # 5.1.0
+
+# --- API et interface ---
+fastapi>=0.110            # 0.163.1
+uvicorn[standard]>=0.27   # 0.54.0
+python-multipart>=0.0.9   # 0.0.34 ; envoi de fichiers
+
+# --- moteurs de transcription ---
+setuptools<81             # resampy (dépendance de basic-pitch) importe pkg_resources, retiré de setuptools 81
+basic-pitch==0.4.0        # installe TensorFlow 2.15 sous Python 3.11 ; ONNX sous Windows / TFLite sous Linux en 3.10
+torch>=2.0                # 2.15.0+cpu
+piano_transcription_inference==0.0.6

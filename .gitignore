@@ -1,0 +1,41 @@
+# Environnements et caches Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Configuration locale
+.env
+
+# Poids des modèles (téléchargés par scripts/download_models.py)
+models/*
+!models/.gitkeep
+
+# Données des jobs
+data/uploads/*
+!data/uploads/.gitkeep
+data/outputs/*
+!data/outputs/.gitkeep
+
+# Fixtures de test générées par tests/fixtures_generator.py
+tests/fixtures/*
+!tests/fixtures/.gitkeep
+
+# Bibliothèques téléchargées pour l'interface
+web/vendor/*
+!web/vendor/.gitkeep
+
+# Éditeurs et systèmes
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+.claude/

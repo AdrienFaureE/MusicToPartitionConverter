@@ -1,0 +1,15 @@
+# Dépendances du moteur MT3 (JAX / T5X), à installer À PART et seulement si nécessaire :
+#   pip install -r requirements-mt3.txt
+#
+# Linux ou macOS uniquement (sous Windows : WSL2). Git est requis.
+# MT3 n'est pas publié sur PyPI : il s'installe depuis GitHub et tire lui-même, depuis leurs
+# branches principales, flax, seqio, t5x et note-seq, ainsi que tensorflow et tensorflow-text.
+# Ces dépendances ne sont pas épinglées par leurs auteurs : l'installation peut casser d'un jour à
+# l'autre et entrer en conflit avec TensorFlow 2.15 (basic-pitch) et PyTorch. En cas de conflit,
+# utilisez un environnement virtuel dédié à MT3 (voir docs/models.md).
+#
+# NON VÉRIFIÉ sur la machine de développement (Windows) : voir docs/models.md.
+
+jax
+nest-asyncio
+mt3 @ git+https://github.com/magenta/mt3@main

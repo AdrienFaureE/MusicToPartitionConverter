@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>partition-ia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>partition-ia</h1>
+    <p>De l'audio piano à la partition : MusicXML, PDF et aperçu, en local.</p>
+  </header>
+
+  <main>
+    <section class="card" aria-labelledby="upload-title">
+      <h2 id="upload-title">Nouvelle transcription</h2>
+      <form id="upload-form">
+        <label class="field">
+          <span>Fichier audio (MP3, WAV, FLAC, M4A)</span>
+          <input type="file" id="file" name="file" accept=".mp3,.wav,.flac,.m4a,audio/*" required>
+        </label>
+        <fieldset class="field">
+          <legend>Moteur</legend>
+          <div id="engines" class="engines">Chargement des moteurs…</div>
+        </fieldset>
+        <button type="submit" id="submit">Transcrire</button>
+      </form>
+      <p id="form-error" class="error" role="alert" hidden></p>
+    </section>
+
+    <section class="card" id="job" hidden aria-live="polite">
+      <h2>Traitement de <span id="job-name"></span></h2>
+      <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress">
+        <div class="bar" id="progress-bar"></div>
+      </div>
+      <p id="job-step" class="muted"></p>
+      <p id="job-error" class="error" role="alert" hidden></p>
+    </section>
+
+    <section id="results" class="results" hidden></section>
+  </main>
+
+  <template id="run-template">
+    <article class="card run">
+      <h3 class="run-title"></h3>
+      <p class="run-summary muted"></p>
+      <p class="run-error error" hidden></p>
+      <ul class="run-warnings"></ul>
+      <ul class="downloads"></ul>
+      <div class="preview"></div>
+    </article>
+  </template>
+
+  <!-- Optionnel : rendu côté navigateur si score.html est absent (python scripts/download_models.py --verovio-js). -->
+  <script src="vendor/verovio-toolkit-wasm.js" onerror="this.remove()"></script>
+  <script src="app.js"></script>
+</body>
+</html>
